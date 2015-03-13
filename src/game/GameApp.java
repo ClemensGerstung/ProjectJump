@@ -43,7 +43,7 @@ public class GameApp extends BasicGame {
         try {
             world = World.loadFromFile("lvl/level_1.config");
             System.out.println(world);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
     }
@@ -130,7 +130,7 @@ public class GameApp extends BasicGame {
         });
         mainMenu.addChild(loadlvl);
         Button close = new Button("SCHLIESSEN");
-        close.setClickPerformed(() -> gc.exit());
+        close.setClickPerformed(gc::exit);
         mainMenu.addChild(close);
         mainMenu.centerAndSpread(gc, font);
     }
