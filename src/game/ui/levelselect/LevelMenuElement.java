@@ -9,8 +9,6 @@ import org.newdawn.slick.SlickException;
 
 
 public class LevelMenuElement extends MenuElement {
-    private float x = 0;
-    private float y = 300;
     public static float WIDTH = 300.f;
 
     private Color normal = new Color(200, 100, 10, 0);
@@ -38,12 +36,13 @@ public class LevelMenuElement extends MenuElement {
     public void render(GameContainer gc, Graphics g) throws SlickException {
         Color c = g.getColor();
         g.setColor(current);
-        g.fillRect(x, 0, x + WIDTH, gc.getHeight() - 20.f);
+        g.fillRect(x, 0, WIDTH, gc.getHeight() - 100.f);
         g.setColor(c);
 
-        level.setX((WIDTH - level.getWidth()) / 2.f);
+        level.setX(x + (WIDTH - level.getWidth()) / 2.f);
         level.render(gc, g);
-        g.drawString(level.getName().toUpperCase(), x + (WIDTH - gc.getDefaultFont().getWidth(level.getName().toUpperCase())) / 2.f, y);
+        g.drawString(level.getName().toUpperCase(), x + (WIDTH - gc.getDefaultFont().getWidth(level.getName()
+                .toUpperCase())) / 2.f, 300);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class LevelMenuElement extends MenuElement {
         if (Mouse.getX() > x
                 && Mouse.getX() < x + WIDTH
                 && (gc.getHeight() - Mouse.getY()) > 0
-                && (gc.getHeight() - Mouse.getY()) < gc.getHeight() - 20.f) {
+                && (gc.getHeight() - Mouse.getY()) < gc.getHeight() - 100.f) {
             current = hover;
         } else {
             current = normal;
@@ -61,9 +60,18 @@ public class LevelMenuElement extends MenuElement {
 
     public void setPosition(float x_offset, float y_offset) {
         level.setPosition(x_offset, y_offset);
-        x += x_offset / 2.f;
-        y += y_offset / 2.f;
+        x += x_offset;
+        y += y_offset;
     }
 
+    @Override
+    public void setX(float x) {
+        level.setX(x);
+        super.setX(x);
+    }
 
+    @Override
+    public String toString() {
+        return "LevelMenuElement: [" + "x=" + x + ";y=" + y + "]";
+    }
 }

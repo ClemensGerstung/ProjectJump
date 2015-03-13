@@ -31,6 +31,8 @@ public class GameApp extends BasicGame {
 
     @Override
     public void init(GameContainer gc) throws SlickException {
+        gc.getInput().addMouseListener(levelSelectMenu);
+
         this.background = new Background(2.5f, "gfx/background.jpg");
         this.font = new TrueTypeFont(loadFont("fonts/font.ttf"), false);
         gc.setDefaultFont(font);
@@ -214,4 +216,5 @@ public class GameApp extends BasicGame {
 
         gameOver.centerAndSpread(gc, font);
     }
+
 }
