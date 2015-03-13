@@ -9,12 +9,23 @@ public class GameState {
         GAMEOVER
     }
 
+    private State state;
+
     private static GameState ourInstance = new GameState();
 
     public static GameState getInstance() {
         return ourInstance;
     }
 
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
     private GameState() {
+        state = State.MENU;
     }
 }
