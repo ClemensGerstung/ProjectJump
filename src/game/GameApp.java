@@ -1,7 +1,9 @@
 package game;
 
+import game.ui.*;
 import game.ui.Button;
 import game.ui.Menu;
+import game.ui.TextArea;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -21,6 +23,7 @@ public class GameApp extends BasicGame {
     private Background background;
     private Menu mainMenu;
     private Menu pauseMenu;
+    private Menu info;
     private TrueTypeFont font;
 
     @Override
@@ -35,12 +38,17 @@ public class GameApp extends BasicGame {
         this.pauseMenu = new Menu();
         initPauseMenu(gc);
 
+        this.info = new Menu();
+        initInfo(gc);
+
         try {
             world = World.loadFromFile("lvl/level_1.config");
+            System.out.println(world);
         } catch (Exception e) {
         }
 
     }
+
 
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -64,6 +72,9 @@ public class GameApp extends BasicGame {
             case WIN:
                 world.render(gc, g);
                 break;
+            case INFO:
+                info.render(gc, g);
+                break;
         }
     }
 
@@ -85,6 +96,10 @@ public class GameApp extends BasicGame {
 
                 break;
             case WIN:
+
+                break;
+            case INFO:
+                info.update(gc);
                 break;
         }
 
@@ -108,8 +123,7 @@ public class GameApp extends BasicGame {
         play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
         mainMenu.addChild(play);
         Button info = new Button("INFO");
-        info.setClickPerformed(() -> {
-        });
+        info.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.INFO));
         mainMenu.addChild(info);
         Button loadlvl = new Button("LEVELAUSWAHL");
         loadlvl.setClickPerformed(() -> {
@@ -122,6 +136,8 @@ public class GameApp extends BasicGame {
     }
 
     private void initPauseMenu(GameContainer gc) {
+        game.ui.TextArea textArea = new TextArea("PAUSE");
+        pauseMenu.addChild(textArea);
         Button play = new Button("WEITER SPIELEN");
         play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
         pauseMenu.addChild(play);
@@ -130,5 +146,13 @@ public class GameApp extends BasicGame {
         pauseMenu.addChild(menu);
 
         pauseMenu.centerAndSpread(gc, font);
+    }
+
+    private void initInfo(GameContainer gc) {
+        game.ui.TextArea textArea = new TextArea("INFO");
+        info.addChild(textArea);
+        game.ui.TextArea text = new TextArea("Diese Spiel wurde von Gott geschrieben!");
+        info.addChild(text);
+        info.centerAndSpread(gc, font);
     }
 }

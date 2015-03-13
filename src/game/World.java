@@ -51,6 +51,7 @@ public class World {
 
     public void update(GameContainer gc, int delta) throws SlickException {
         distance += (float) delta * speed / 50.f;
+        end_offset -= (float) delta * speed / 50.f;
 
         for (WorldItem item : maptiles) {
             item.update(distance);
