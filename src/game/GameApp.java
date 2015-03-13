@@ -27,8 +27,9 @@ public class GameApp extends BasicGame {
 	public void init(GameContainer gc) throws SlickException {
 		this.background = new Background(2.5f, "gfx/background.jpg");
         this.font = new TrueTypeFont(loadFont("fonts/font.ttf"), false);
+        gc.setDefaultFont(font);
 
-        this.button = new Button("BUTTON");
+        this.button = new Button(100.f, 100.f, "BUTTON");
 
         try {
 			world = World.loadFromFile("lvl/level_1.config");
@@ -41,7 +42,7 @@ public class GameApp extends BasicGame {
 		background.render(gc, g);
         g.setFont(font);
 
-
+        button.render(gc, g);
         switch(GameState.getInstance().getState()){
             case MENU:
                 break;
@@ -58,6 +59,7 @@ public class GameApp extends BasicGame {
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
 		background.update(gc, delta);
+        button.update(gc, delta);
 
         switch(GameState.getInstance().getState()){
             case MENU:
