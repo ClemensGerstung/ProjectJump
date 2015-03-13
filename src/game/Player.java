@@ -49,21 +49,21 @@ public class Player {
             throws SlickException {
 
         applyGravity(world.getGravity(), delta);
-
+        Ellipse e = getEllipse();
         for (WorldItem item : world.getMaptiles()) {
-            if (getEllipse().intersects(item.getRectangle())) {
+            if (e.intersects(item.getRectangle())) {
                 if (jumping) {
                     y = item.getY() - image.getHeight() - 0.5f;
+                } else {
+                    if(e.getY() >= item.getY() && e.getY() + e.getHeight() <= item.getY() + item.getRectangle().getHeight() + 5.f){
+                        System.out.println("move backwards");
+                        x -= (float) delta * world.getSpeed() / 50.f;
+                    }
                 }
                 time = 0;
                 upspeed = 0;
                 jumping = false;
             }
-        }
-
-        // vertical intersects
-        if(!jumping){
-
         }
 
         if (jumping) {
@@ -83,9 +83,5 @@ public class Player {
 
     public Ellipse getEllipse() {
         return new Ellipse(x + image.getWidth() / 2.f, y + image.getHeight() / 2.f, image.getWidth() / 2.f - image.getWidth() * 0.2f, image.getHeight() / 2.f);
-    }
-
-    private boolean verticalIntersects(Shape shape) {
-        
     }
 }
