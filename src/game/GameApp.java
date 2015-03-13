@@ -20,8 +20,8 @@ public class GameApp extends BasicGame {
     private World world;
     private Background background;
     private Menu mainMenu;
+    private Menu pauseMenu;
     private TrueTypeFont font;
-    private boolean firstStart = true;
 
     @Override
     public void init(GameContainer gc) throws SlickException {
@@ -31,6 +31,9 @@ public class GameApp extends BasicGame {
 
         this.mainMenu = new Menu();
         initMenu(gc);
+
+        this.pauseMenu = new Menu();
+        initPauseMenu(gc);
 
         try {
             world = World.loadFromFile("lvl/level_1.config");
@@ -49,11 +52,17 @@ public class GameApp extends BasicGame {
                 mainMenu.render(gc, g);
                 break;
             case PLAYING:
-                if (world != null) world.render(gc, g);
+                world.render(gc, g);
                 break;
             case PAUSE:
+                world.render(gc, g);
+                pauseMenu.render(gc, g);
                 break;
             case GAMEOVER:
+                world.render(gc, g);
+                break;
+            case WIN:
+                world.render(gc, g);
                 break;
         }
     }
@@ -67,18 +76,20 @@ public class GameApp extends BasicGame {
                 mainMenu.update(gc);
                 break;
             case PLAYING:
-                if (world != null) world.update(gc, delta);
+                world.update(gc, delta);
                 break;
             case PAUSE:
-
+                pauseMenu.update(gc);
                 break;
             case GAMEOVER:
 
                 break;
+            case WIN:
+                break;
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-            gc.exit();
+            GameState.getInstance().setState(GameState.State.PAUSE);
         }
     }
 
@@ -97,10 +108,27 @@ public class GameApp extends BasicGame {
         play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
         mainMenu.addChild(play);
         Button info = new Button("INFO");
+        info.setClickPerformed(() -> {
+        });
         mainMenu.addChild(info);
-        Button close = new Button("SCHLIEßEN");
+        Button loadlvl = new Button("LEVELAUSWAHL");
+        loadlvl.setClickPerformed(() -> {
+        });
+        mainMenu.addChild(loadlvl);
+        Button close = new Button("SCHLIESSEN");
         close.setClickPerformed(() -> gc.exit());
         mainMenu.addChild(close);
         mainMenu.centerAndSpread(gc, font);
+    }
+
+    private void initPauseMenu(GameContainer gc) {
+        Button play = new Button("WEITER SPIELEN");
+        play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
+        pauseMenu.addChild(play);
+        Button menu = new Button("ZUM HAUPTMENU");
+        menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
+        pauseMenu.addChild(menu);
+
+        pauseMenu.centerAndSpread(gc, font);
     }
 }

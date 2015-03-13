@@ -84,4 +84,12 @@ public class Player {
     public Ellipse getEllipse() {
         return new Ellipse(x + image.getWidth() / 2.f, y + image.getHeight() / 2.f, image.getWidth() / 2.f - image.getWidth() * 0.2f, image.getHeight() / 2.f);
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getX() {
+        return x;
+    }
 }

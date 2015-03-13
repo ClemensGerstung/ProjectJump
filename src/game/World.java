@@ -60,7 +60,12 @@ public class World {
 
         speed += acceleration;
 
-
+        if(player.getY() > gc.getHeight() || player.getX() < 0){
+            GameState.getInstance().setState(GameState.State.GAMEOVER);
+        }
+        if(player.getX() > end_offset){
+            GameState.getInstance().setState(GameState.State.WIN);
+        }
     }
 
     public void addMapTile(float x, int line) {

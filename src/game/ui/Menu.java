@@ -25,8 +25,8 @@ public class Menu {
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
         Color c = g.getColor();
-        g.setColor(new Color(30, 30, 30, 220));
-        g.drawRect(0, 0, gc.getWidth(), gc.getHeight());
+        g.setColor(new Color(50, 50, 50, 200));
+        g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
         g.setColor(c);
         for (Button child : children) {
             child.render(gc, g);

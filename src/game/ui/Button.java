@@ -102,7 +102,9 @@ public class Button {
             current = hover;
             if (Mouse.isButtonDown(0)) {
                 current = active;
-                iClickPerformed.click();
+                if(iClickPerformed != null){
+                    iClickPerformed.click();
+                }
             }
         } else {
             current = normal;
