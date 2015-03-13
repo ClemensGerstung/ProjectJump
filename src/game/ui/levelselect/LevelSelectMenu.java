@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LevelSelectMenu {
     private List<LevelMenuElement> elements = new ArrayList<>();
-    private Rectangle slider = new Rectangle(0, 0, 0, 0);
+    private Rectangle slider = new Rectangle(0, 0, 100, 20);
 
     public LevelSelectMenu() {
     }
@@ -31,6 +31,7 @@ public class LevelSelectMenu {
         g.fillRect(0, gc.getHeight() - 20, gc.getWidth(), 20);
         g.setColor(Color.decode("#A32700"));
         slider.setX(0);
+        slider.setY(gc.getHeight() - 20);
         g.fill(slider);
         g.setColor(c);
     }
