@@ -48,6 +48,14 @@ public class WorldItem implements Comparable<WorldItem> {
         return x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
     @Override
 	public int compareTo(WorldItem o) {
 		return o.x < this.x ? 1 : 0;

@@ -23,7 +23,7 @@ public class World {
     private float end_offset_origin = 0.f;
     private final float gravity = 0.05f;
     private List<WorldItem> maptiles = new ArrayList<WorldItem>();
-    private static Image maptile;
+    public static Image maptile;
     private final float acceleration;
     private float length;
 

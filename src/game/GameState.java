@@ -8,7 +8,8 @@ public class GameState {
         PAUSE,
         GAMEOVER,
         WIN,
-        INFO
+        INFO,
+        SELECTLEVEL
     }
 
     private State state;

@@ -1,9 +1,9 @@
 package game;
 
-import game.ui.*;
 import game.ui.Button;
 import game.ui.Menu;
 import game.ui.TextArea;
+import game.ui.levelselect.LevelSelectMenu;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.*;
 import org.newdawn.slick.Graphics;
@@ -26,6 +26,7 @@ public class GameApp extends BasicGame {
     private Menu info = new Menu();
     private Menu win = new Menu();
     private Menu gameOver = new Menu();
+    private LevelSelectMenu levelSelectMenu = new LevelSelectMenu();
     private TrueTypeFont font;
 
     @Override
@@ -39,6 +40,12 @@ public class GameApp extends BasicGame {
         initInfo(gc);
         initWin(gc);
         initGameOver(gc);
+
+        try {
+            levelSelectMenu.init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             world = World.loadFromFile("lvl/level_1.config");
@@ -75,6 +82,9 @@ public class GameApp extends BasicGame {
             case INFO:
                 info.render(gc, g);
                 break;
+            case SELECTLEVEL:
+                levelSelectMenu.render(gc, g);
+                break;
         }
     }
 
@@ -101,6 +111,9 @@ public class GameApp extends BasicGame {
             case INFO:
                 info.update(gc);
                 break;
+            case SELECTLEVEL:
+                levelSelectMenu.update(gc);
+                break;
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
@@ -126,8 +139,7 @@ public class GameApp extends BasicGame {
         info.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.INFO));
         mainMenu.addChild(info);
         Button loadlvl = new Button("LEVELAUSWAHL");
-        loadlvl.setClickPerformed(() -> {
-        });
+        loadlvl.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.SELECTLEVEL));
         mainMenu.addChild(loadlvl);
         Button close = new Button("SCHLIESSEN");
         close.setClickPerformed(gc::exit);
@@ -176,8 +188,7 @@ public class GameApp extends BasicGame {
         game.ui.TextArea textArea = new TextArea("GESCHAFFT");
         win.addChild(textArea);
         Button loadlvl = new Button("LEVELAUSWAHL");
-        loadlvl.setClickPerformed(() -> {
-        });
+        loadlvl.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.SELECTLEVEL));
         win.addChild(loadlvl);
         Button menu = new Button("ZUM HAUPTMENU");
         menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
