@@ -21,9 +21,11 @@ public class GameApp extends BasicGame {
 
     private World world;
     private Background background;
-    private Menu mainMenu;
-    private Menu pauseMenu;
-    private Menu info;
+    private Menu mainMenu = new Menu();
+    private Menu pauseMenu = new Menu();
+    private Menu info = new Menu();
+    private Menu win = new Menu();
+    private Menu gameOver = new Menu();
     private TrueTypeFont font;
 
     @Override
@@ -32,14 +34,11 @@ public class GameApp extends BasicGame {
         this.font = new TrueTypeFont(loadFont("fonts/font.ttf"), false);
         gc.setDefaultFont(font);
 
-        this.mainMenu = new Menu();
         initMenu(gc);
-
-        this.pauseMenu = new Menu();
         initPauseMenu(gc);
-
-        this.info = new Menu();
         initInfo(gc);
+        initWin(gc);
+        initGameOver(gc);
 
         try {
             world = World.loadFromFile("lvl/level_1.config");
@@ -48,7 +47,6 @@ public class GameApp extends BasicGame {
         }
 
     }
-
 
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -68,9 +66,11 @@ public class GameApp extends BasicGame {
                 break;
             case GAMEOVER:
                 world.render(gc, g);
+                gameOver.render(gc, g);
                 break;
             case WIN:
                 world.render(gc, g);
+                win.render(gc, g);
                 break;
             case INFO:
                 info.render(gc, g);
@@ -93,10 +93,10 @@ public class GameApp extends BasicGame {
                 pauseMenu.update(gc);
                 break;
             case GAMEOVER:
-
+                gameOver.update(gc);
                 break;
             case WIN:
-
+                win.update(gc);
                 break;
             case INFO:
                 info.update(gc);
@@ -138,9 +138,18 @@ public class GameApp extends BasicGame {
     private void initPauseMenu(GameContainer gc) {
         game.ui.TextArea textArea = new TextArea("PAUSE");
         pauseMenu.addChild(textArea);
-        Button play = new Button("WEITER SPIELEN");
+        Button play = new Button("WEITERSPIELEN");
         play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
         pauseMenu.addChild(play);
+        Button restart = new Button("NEUSTARTEN");
+        restart.setClickPerformed(() -> {
+            try {
+                world = World.loadFromFile("lvl/level_1.config");
+            } catch (Exception ignored) {
+            }
+            GameState.getInstance().setState(GameState.State.PLAYING);
+        });
+        pauseMenu.addChild(restart);
         Button menu = new Button("ZUM HAUPTMENU");
         menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
         pauseMenu.addChild(menu);
@@ -151,8 +160,47 @@ public class GameApp extends BasicGame {
     private void initInfo(GameContainer gc) {
         game.ui.TextArea textArea = new TextArea("INFO");
         info.addChild(textArea);
-        game.ui.TextArea text = new TextArea("Diese Spiel wurde von Gott geschrieben!");
+        game.ui.TextArea text = new TextArea("Diese Spiel wurde von Gott".toUpperCase());
         info.addChild(text);
-        info.centerAndSpread(gc, font);
+        text = new TextArea("geschrieben!".toUpperCase());
+        info.addChild(text);
+
+        Button menu = new Button("ZUM HAUPTMENU");
+        menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
+        info.addChild(menu);
+
+        info.centerAndAlignTop(gc, font, 15.f, 40.f);
+    }
+
+    private void initWin(GameContainer gc) {
+        game.ui.TextArea textArea = new TextArea("GESCHAFFT");
+        win.addChild(textArea);
+        Button loadlvl = new Button("LEVELAUSWAHL");
+        loadlvl.setClickPerformed(() -> {
+        });
+        win.addChild(loadlvl);
+        Button menu = new Button("ZUM HAUPTMENU");
+        menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
+        win.addChild(menu);
+        win.centerAndSpread(gc, font);
+    }
+
+    private void initGameOver(GameContainer gc) {
+        game.ui.TextArea textArea = new TextArea("NICHT GESCHAFFT");
+        gameOver.addChild(textArea);
+        Button restart = new Button("NEUSTARTEN");
+        restart.setClickPerformed(() -> {
+            try {
+                world = World.loadFromFile("lvl/level_1.config");
+            } catch (Exception ignored) {
+            }
+            GameState.getInstance().setState(GameState.State.PLAYING);
+        });
+        gameOver.addChild(restart);
+        Button menu = new Button("ZUM HAUPTMENU");
+        menu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
+        gameOver.addChild(menu);
+
+        gameOver.centerAndSpread(gc, font);
     }
 }

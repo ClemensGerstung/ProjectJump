@@ -42,7 +42,15 @@ public class Menu {
         }
     }
 
-    public void centerAndAlignTop(GameContainer gc, TrueTypeFont font, float offset){
-
+    public void centerAndAlignTop(GameContainer gc, TrueTypeFont font, float offset, float topoffset) {
+        for (int i = 0; i < children.size(); i++) {
+            MenuElement element = children.get(i);
+            element.setX((gc.getWidth() - font.getWidth(element.getContent())) / 2.f);
+            if (i == 0) {
+                element.setY(font.getHeight(element.getContent()) * i + offset + topoffset);
+            } else {
+                element.setY(font.getHeight(element.getContent()) + offset + children.get(i - 1).getY());
+            }
+        }
     }
 }

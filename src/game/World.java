@@ -20,6 +20,7 @@ public class World {
     private String name = "";
     private float start_offset = 0.f;
     private float end_offset = 0.f;
+    private float end_offset_origin = 0.f;
     private final float gravity = 0.05f;
     private List<WorldItem> maptiles = new ArrayList<WorldItem>();
     private static Image maptile;
@@ -102,6 +103,7 @@ public class World {
     }
 
     private void setEnd_offset(float end_offset) {
+        this.end_offset_origin = end_offset;
         this.end_offset = end_offset;
     }
 

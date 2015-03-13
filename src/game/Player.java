@@ -56,7 +56,6 @@ public class Player {
                     y = item.getY() - image.getHeight() - 0.5f;
                 } else {
                     if(e.getY() >= item.getY() && e.getY() + e.getHeight() <= item.getY() + item.getRectangle().getHeight() + 5.f){
-                        System.out.println("move backwards");
                         x -= (float) delta * world.getSpeed() / 50.f;
                     }
                 }
