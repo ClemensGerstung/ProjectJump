@@ -1,10 +1,12 @@
 package game.ui.levelselect;
 
 import game.World;
+import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.util.ResourceLoader;
 
 import java.io.*;
@@ -13,6 +15,7 @@ import java.util.List;
 
 public class LevelSelectMenu {
     private List<LevelMenuElement> elements = new ArrayList<>();
+    private Rectangle slider = new Rectangle(0, 0, 0, 0);
 
     public LevelSelectMenu() {
     }
@@ -26,13 +29,21 @@ public class LevelSelectMenu {
 
         g.setColor(new Color(40, 40, 40, 190));
         g.fillRect(0, gc.getHeight() - 20, gc.getWidth(), 20);
-
+        g.setColor(Color.decode("#A32700"));
+        slider.setX(0);
+        g.fill(slider);
         g.setColor(c);
     }
 
     public void update(GameContainer gc) throws SlickException {
         for (LevelMenuElement element : elements) {
             element.update(gc);
+        }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+            for (LevelMenuElement element : elements) {
+                element.setPosition(-0.2f, 0);
+            }
         }
     }
 
@@ -60,7 +71,7 @@ public class LevelSelectMenu {
                     for (int j = 0; j < world_tiles.length; j++) {
                         switch (world_tiles[i].charAt(j)) {
                             case '#':
-                                levelObj.addMapTile(j * World.maptile.getWidth(), i);
+                                levelObj.addMapTile(j * Level.maptile.getWidth(), i);
                                 break;
                         }
                     }
