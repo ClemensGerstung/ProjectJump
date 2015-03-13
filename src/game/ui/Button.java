@@ -5,9 +5,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
-
-import java.awt.*;
 
 public class Button {
 
@@ -54,6 +51,38 @@ public class Button {
         this.x = x;
     }
 
+    public Color getNormal() {
+        return normal;
+    }
+
+    public void setNormal(Color normal) {
+        this.normal = normal;
+    }
+
+    public Color getHover() {
+        return hover;
+    }
+
+    public void setHover(Color hover) {
+        this.hover = hover;
+    }
+
+    public Color getActive() {
+        return active;
+    }
+
+    public void setActive(Color active) {
+        this.active = active;
+    }
+
+    public Color getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Color current) {
+        this.current = current;
+    }
+
     public void setClickPerformed(IClickPerformed iClickPerformed) {
         this.iClickPerformed = iClickPerformed;
     }
@@ -65,7 +94,7 @@ public class Button {
         g.setColor(c);
     }
 
-    public void update(GameContainer gc, int delta) throws SlickException {
+    public void update(GameContainer gc) throws SlickException {
         if (Mouse.getX() > x
                 && Mouse.getX() < x + gc.getDefaultFont().getWidth(content)
                 && (gc.getHeight() - Mouse.getY()) > y
@@ -73,6 +102,7 @@ public class Button {
             current = hover;
             if (Mouse.isButtonDown(0)) {
                 current = active;
+                iClickPerformed.click();
             }
         } else {
             current = normal;

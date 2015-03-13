@@ -10,7 +10,7 @@ public class MainGame {
 		AppGameContainer jumper = new AppGameContainer(new GameApp("Jump And Run alpha 0.0.5"));
         jumper.setDisplayMode(800, 450, false);
         jumper.setAlwaysRender(true);
-        jumper.setShowFPS(true); // TODO: set to false
+        jumper.setShowFPS(false); // TODO: set to false
         jumper.start();
 	}
 
