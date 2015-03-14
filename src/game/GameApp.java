@@ -49,11 +49,11 @@ public class GameApp extends BasicGame {
             e.printStackTrace();
         }
 
-        try {
-            world = World.loadFromFile("lvl/level_1.config");
-            System.out.println(world);
-        } catch (Exception ignored) {
-        }
+//        try {
+//            world = World.loadFromFile("lvl/level_1.config");
+//            System.out.println(world);
+//        } catch (Exception ignored) {
+//        }
 
     }
 
@@ -93,7 +93,7 @@ public class GameApp extends BasicGame {
     @Override
     public void update(GameContainer gc, int delta) throws SlickException {
         background.update(gc, delta);
-
+        world = GameState.getInstance().getWorld();
         switch (GameState.getInstance().getState()) {
             case MENU:
                 mainMenu.update(gc);

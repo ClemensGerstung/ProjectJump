@@ -1,11 +1,9 @@
 package game.ui.levelselect;
 
+import game.GameState;
 import game.ui.MenuElement;
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 
 public class LevelMenuElement extends MenuElement {
@@ -53,6 +51,12 @@ public class LevelMenuElement extends MenuElement {
                 && (gc.getHeight() - Mouse.getY()) > 0
                 && (gc.getHeight() - Mouse.getY()) < gc.getHeight() - 100.f) {
             current = hover;
+            if(Mouse.isButtonDown(0)){
+                try {
+                    GameState.getInstance().setWorld(level.getFile());
+                    GameState.getInstance().setState(GameState.State.PLAYING);
+                } catch (Exception ignored) {}
+            }
         } else {
             current = normal;
         }

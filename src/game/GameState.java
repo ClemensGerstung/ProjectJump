@@ -13,6 +13,7 @@ public class GameState {
     }
 
     private State state;
+    private World world;
 
     private static GameState ourInstance = new GameState();
 
@@ -30,5 +31,17 @@ public class GameState {
 
     private GameState() {
         state = State.MENU;
+        try {
+            world = World.loadFromFile("lvl/level_1.config");
+        } catch (Exception ignored) {
+        }
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(String level) throws Exception {
+        world = World.loadFromFile("lvl/" + level);
     }
 }

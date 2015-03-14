@@ -80,7 +80,6 @@ public class LevelSelectMenu implements MouseListener {
                 }
 
                 Level levelObj = new Level(level.getName(), name);
-                levelObj.index = in;
 
                 for (int i = 0; i < world_tiles.length; i++) {
                     for (int j = 0; j < world_tiles.length; j++) {

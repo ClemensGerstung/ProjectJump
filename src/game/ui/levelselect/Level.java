@@ -9,7 +9,6 @@ import java.util.List;
 public class Level {
     private String file;
     private String name;
-    public int index; // TODO: remove
     private List<LevelItem> items = new ArrayList<>();
 
     public static Image maptile;
