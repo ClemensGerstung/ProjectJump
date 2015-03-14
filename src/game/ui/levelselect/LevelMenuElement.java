@@ -53,6 +53,7 @@ public class LevelMenuElement extends MenuElement {
             current = hover;
             if(Mouse.isButtonDown(0)){
                 try {
+                    Thread.sleep(100);
                     GameState.getInstance().setWorld(level.getFile());
                     GameState.getInstance().setState(GameState.State.PLAYING);
                 } catch (Exception ignored) {}

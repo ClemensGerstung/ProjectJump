@@ -39,7 +39,11 @@ public class Button extends MenuElement {
             current = hover;
             if (Mouse.isButtonDown(0)) {
                 current = active;
-                if(iClickPerformed != null){
+                if (iClickPerformed != null) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                    }
                     iClickPerformed.click();
                 }
             }
