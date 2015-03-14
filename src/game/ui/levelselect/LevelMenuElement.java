@@ -71,7 +71,7 @@ public class LevelMenuElement extends MenuElement {
 
     @Override
     public void setX(float x) {
-        //level.setX(x);
+        level.setX(x);
         super.setX(x);
     }
 
