@@ -9,14 +9,16 @@ import java.util.List;
 public class Level {
     private String file;
     private String name;
+    public int index; // TODO: remove
     private List<LevelItem> items = new ArrayList<>();
 
     public static Image maptile;
 
     static {
         try {
-            maptile=new Image("gfx/maptile_small.png");
-        } catch (SlickException ignored) {}
+            maptile = new Image("gfx/maptile_small.png");
+        } catch (SlickException ignored) {
+        }
     }
 
     private Rectangle rectangle = new Rectangle(0, 0, maptile.getWidth() * 9, maptile.getHeight() * 9);
@@ -48,16 +50,13 @@ public class Level {
 
     public void addMapTile(float x, int line) {
         try {
-            LevelItem item = new LevelItem(x, maptile.getHeight() * line,
-                    maptile);
+            LevelItem item = new LevelItem(x, maptile.getHeight() * line, maptile);
             items.add(item);
         } catch (Exception ignored) {
         }
     }
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
-
-
         for (LevelItem item : items) {
             item.render(gc, g);
         }
@@ -81,18 +80,18 @@ public class Level {
     }
 
     public void setX(float x) {
-        float offset = x > rectangle.getX() ? x - rectangle.getX() : rectangle.getX() - x;
+        float offset = rectangle.getX() - x;
         for (LevelItem item : items) {
-            item.setX(item.getX() + offset);
+            item.setX(item.getX() - offset);
         }
-        rectangle.setX(rectangle.getX() + offset);
+        rectangle.setX(rectangle.getX() - offset);
     }
 
     public float getX() {
         return rectangle.getX();
     }
 
-    public void setY(float y){
+    public void setY(float y) {
         float offset = y > rectangle.getY() ? y - rectangle.getY() : rectangle.getY() - y;
         for (LevelItem item : items) {
             item.setY(item.getY() + offset);

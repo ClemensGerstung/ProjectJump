@@ -19,9 +19,11 @@ public class LevelSelectMenu implements MouseListener {
     private Rectangle slider = new Rectangle(0, 0, 0, 20);
     private boolean pressed = false;
     private Button mainMenu = new Button("Hauptmenu".toUpperCase(), 25.f, 380.f);
+    private float max;
 
     public LevelSelectMenu() {
         mainMenu.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.MENU));
+
     }
 
     public void render(GameContainer gc, Graphics g) throws SlickException {
@@ -31,12 +33,14 @@ public class LevelSelectMenu implements MouseListener {
             element.render(gc, g);
         }
 
+
         g.setColor(new Color(40, 40, 40, 190));
         g.fillRect(0, gc.getHeight() - 20, gc.getWidth(), 20);
         g.setColor(Color.decode("#A32700"));
         slider.setY(gc.getHeight() - 20);
         slider.setWidth(LevelMenuElement.WIDTH * elements.size() < gc.getWidth() ? gc.getWidth() : gc.getWidth() /
                 (LevelMenuElement.WIDTH * elements.size()) * gc.getWidth());
+        max = gc.getWidth() - slider.getWidth();
         g.fill(slider);
         g.setColor(c);
         mainMenu.render(gc, g);
@@ -58,6 +62,7 @@ public class LevelSelectMenu implements MouseListener {
 
     public void init() throws Exception {
         File[] files = new File(ResourceLoader.getResource("lvl").getFile()).listFiles();
+        int in = 0;
         for (File level : files) {
             if (level.getName().endsWith(".config")) {
                 BufferedReader reader = new BufferedReader(new FileReader(level));
@@ -75,6 +80,7 @@ public class LevelSelectMenu implements MouseListener {
                 }
 
                 Level levelObj = new Level(level.getName(), name);
+                levelObj.index = in;
 
                 for (int i = 0; i < world_tiles.length; i++) {
                     for (int j = 0; j < world_tiles.length; j++) {
@@ -89,6 +95,7 @@ public class LevelSelectMenu implements MouseListener {
                 LevelMenuElement element = new LevelMenuElement(levelObj);
                 element.setX(LevelMenuElement.WIDTH * elements.size());
                 elements.add(element);
+                in++;
             }
         }
     }
@@ -106,6 +113,9 @@ public class LevelSelectMenu implements MouseListener {
 
     @Override
     public void mousePressed(int button, int x, int y) {
+//        System.out.println(new StringBuilder("[Rectangle x:").append(slider.getX()).append(" y:").append(slider.getY
+//                ()).append(" width:").append(slider.getWidth()).append(" height:").append(slider.getHeight()).append
+//                ("]"));
         if (button == 0) {
             if (slider.intersects(new Rectangle(x, y, 1, 1))) {
                 pressed = true;
@@ -125,15 +135,13 @@ public class LevelSelectMenu implements MouseListener {
 
     @Override
     public void mouseDragged(int oldx, int oldy, int newx, int newy) {
-
         if (pressed) {
             if (slider.getX() >= 0 && slider.getX() + slider.getWidth() <= 800) {
                 slider.setX(slider.getX() + newx - oldx);
-                if (elements.size() * LevelMenuElement.WIDTH >= elements.get(elements.size() - 1).getX() +
-                        LevelMenuElement.WIDTH && 800 - elements.size() * LevelMenuElement.WIDTH <= elements.get(0).getX()) {
-                    for (LevelMenuElement element : elements) {
-                        element.setPosition(oldx - newx, 0);
-                    }
+                for (int i = 0; i < elements.size(); i++) {
+                    //System.out.println(elements.get(i).getLevel().getX());
+                    elements.get(i).setX((slider.getX() / max) * (800 - elements.size() * LevelMenuElement.WIDTH) + i *
+                            LevelMenuElement.WIDTH);
                 }
             }
             if (slider.getX() + slider.getWidth() > 800) {
@@ -141,16 +149,6 @@ public class LevelSelectMenu implements MouseListener {
             }
             if (slider.getX() < 0) {
                 slider.setX(0);
-            }
-            if (elements.get(0).getX() < 800 - elements.size() * LevelMenuElement.WIDTH) {
-                for (int i = 0; i < elements.size(); i++) {
-                    elements.get(i).setX(800 - elements.size() * LevelMenuElement.WIDTH + i * LevelMenuElement.WIDTH);
-                }
-            }
-            if (elements.get(elements.size() - 1).getX() + LevelMenuElement.WIDTH > elements.size() * LevelMenuElement.WIDTH) {
-                for (int i = 0; i < elements.size(); i++) {
-                    elements.get(i).setX(i * LevelMenuElement.WIDTH);
-                }
             }
         }
     }

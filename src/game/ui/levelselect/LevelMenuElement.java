@@ -15,7 +15,6 @@ public class LevelMenuElement extends MenuElement {
     private Color hover = new Color(200, 100, 10, 100);
     private Color current = normal;
 
-
     private Level level;
 
     public LevelMenuElement(Level level) {
@@ -39,7 +38,8 @@ public class LevelMenuElement extends MenuElement {
         g.fillRect(x, 0, WIDTH, gc.getHeight() - 100.f);
         g.setColor(c);
 
-        level.setX(x + (WIDTH - level.getWidth()) / 2.f);
+        //System.out.println(x + ((WIDTH - level.getWidth()) / 2.f));
+        level.setX(x + ((WIDTH - level.getWidth()) / 2.f));
         level.render(gc, g);
         g.drawString(level.getName().toUpperCase(), x + (WIDTH - gc.getDefaultFont().getWidth(level.getName()
                 .toUpperCase())) / 2.f, 300);
@@ -66,12 +66,16 @@ public class LevelMenuElement extends MenuElement {
 
     @Override
     public void setX(float x) {
-        level.setX(x);
+        //level.setX(x);
         super.setX(x);
     }
 
     @Override
     public String toString() {
-        return "LevelMenuElement: [" + "x=" + x + ";y=" + y + "]";
+        return "[" + "x=" + x + ";y=" + y + "]";
+    }
+
+    public Level getLevel() {
+        return level;
     }
 }
