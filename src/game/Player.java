@@ -6,7 +6,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Ellipse;
-import org.newdawn.slick.geom.Shape;
 
 public class Player {
     private float x;

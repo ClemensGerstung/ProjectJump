@@ -135,7 +135,12 @@ public class GameApp extends BasicGame {
 
     private void initMenu(GameContainer gc) {
         Button play = new Button("SPIELEN");
-        play.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.PLAYING));
+        play.setClickPerformed(() -> {
+            try {
+                GameState.getInstance().resetWorld();
+            } catch (Exception ignored) {}
+            GameState.getInstance().setState(GameState.State.PLAYING);
+        });
         mainMenu.addChild(play);
         Button info = new Button("INFO");
         info.setClickPerformed(() -> GameState.getInstance().setState(GameState.State.INFO));
@@ -158,9 +163,8 @@ public class GameApp extends BasicGame {
         Button restart = new Button("NEUSTARTEN");
         restart.setClickPerformed(() -> {
             try {
-                world = World.loadFromFile("lvl/level_1.config");
-            } catch (Exception ignored) {
-            }
+                GameState.getInstance().resetWorld();
+            } catch (Exception ignored) {}
             GameState.getInstance().setState(GameState.State.PLAYING);
         });
         pauseMenu.addChild(restart);
@@ -204,9 +208,8 @@ public class GameApp extends BasicGame {
         Button restart = new Button("NEUSTARTEN");
         restart.setClickPerformed(() -> {
             try {
-                world = World.loadFromFile("lvl/level_1.config");
-            } catch (Exception ignored) {
-            }
+                GameState.getInstance().resetWorld();
+            } catch (Exception ignored) {}
             GameState.getInstance().setState(GameState.State.PLAYING);
         });
         gameOver.addChild(restart);

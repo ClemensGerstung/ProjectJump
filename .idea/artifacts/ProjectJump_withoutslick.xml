@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ProjectJump_withoutslick">
+    <output-path>$PROJECT_DIR$/out/artifacts/ProjectJump_withoutslick</output-path>
+    <root id="archive" name="ProjectJump_withoutslick.jar">
+      <element id="module-output" name="ProjectJump" />
+    </root>
+  </artifact>
+</component>

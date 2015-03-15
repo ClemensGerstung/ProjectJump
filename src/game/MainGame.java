@@ -13,5 +13,4 @@ public class MainGame {
         jumper.setShowFPS(false); // TODO: set to false
         jumper.start();
 	}
-
 }

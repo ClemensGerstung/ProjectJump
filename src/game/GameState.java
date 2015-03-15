@@ -14,6 +14,7 @@ public class GameState {
 
     private State state;
     private World world;
+    private String levelfile = "level_1.config";
 
     private static GameState ourInstance = new GameState();
 
@@ -42,6 +43,11 @@ public class GameState {
     }
 
     public void setWorld(String level) throws Exception {
+        this.levelfile = level;
         world = World.loadFromFile("lvl/" + level);
+    }
+
+    public void resetWorld() throws Exception {
+        world = World.loadFromFile("lvl/" + levelfile);
     }
 }
