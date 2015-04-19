@@ -51,12 +51,6 @@ public class LevelSelectMenu implements MouseListener {
             element.update(gc);
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-            for (LevelMenuElement element : elements) {
-                element.setPosition(-0.2f, 0);
-            }
-        }
-
         mainMenu.update(gc);
     }
 

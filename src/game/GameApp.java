@@ -118,7 +118,7 @@ public class GameApp extends BasicGame {
                 break;
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && GameState.getInstance().getState() == GameState.State.PLAYING) {
             GameState.getInstance().setState(GameState.State.PAUSE);
         }
     }

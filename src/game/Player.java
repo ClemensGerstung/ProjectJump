@@ -19,7 +19,6 @@ public class Player {
 
     public Player(float x, float y, float maxupspeed, String src)
             throws SlickException {
-        super();
         this.x = x;
         this.x_origin = x;
         this.y = y;
